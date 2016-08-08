@@ -1,34 +1,88 @@
-<h1>Post a Song</h1>
-<hr/>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,  initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Music Tracks</title>
 
-<% if @track && @track.errors.any? %>
-  <div>
-    <strong>Some issues with your track, please fix them:</strong>
-    <ul>
-      <% @track.errors.full_messages.each do |message| %> 
-        <li><%= message %></li>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/tracks">Music Track List</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+           <ul class="nav navbar-nav navbar-right">
+            <% if session[:id].nil? %>
+              <li><a href="/users/login">Login</a></li>
+              <li><a href="/users/signup">Sign Up</a></li>
+            <% else %>
+              <li><a href="/users/logout">Logout</a></li>
+            <% end %>
+            </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <h1>Post a Song</h1>
+      <hr/>
+
+      <% if @track && @track.errors.any? %>
+        <div>
+          <strong>Some issues with your track, please fix them:</strong>
+          <ul>
+            <% @track.errors.full_messages.each do |message| %> 
+              <li><%= message %></li>
+            <% end %> 
+          </ul>
+        </div>
       <% end %> 
-    </ul>
-  </div>
-<% end %> 
 
 
-<form method="post" action="/tracks">
-  <div>
-    <label>Author:</label>
-    <input type="text" name="author" value="<%= @track && @track.author %>">
-  </div>
-  <div>
-    <label>Title:</label>
-    <input type="text" name="title" value="<%= @track && @track.title %>">
-  </div>
-  <div>
-    <label>URL (if available):</label>
-    <input type="text" name="url" value="<%= @track && @track.url %>">
-  </div>
-  <div>
-    <input type="submit" value="Submit">
-  </div>
-</form>
+      <form method="post" action="/tracks">
+        <div>
+          <label>Artist:</label>
+          <input type="text" name="author" value="<%= @track && @track.author %>">
+        </div>
+        <div>
+          <label>Title:</label>
+          <input type="text" name="title" value="<%= @track && @track.title %>">
+        </div>
+        <div>
+          <label>URL (if available):</label>
+          <input type="text" name="url" value="<%= @track && @track.url %>">
+        </div>
+        <div>
+          <input type="submit" value="Submit">
+        </div>
+      </form>
+
+      <hr/>
+      <a href="/tracks">Back to All Tracks</a>
+    </div>
+
+
+      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <!-- Include all compiled plugins (below), or include individual files as needed -->
+      <script src="js/bootstrap.min.js"></script>
+    </div>
+
+  </body>
+</html>
 
 

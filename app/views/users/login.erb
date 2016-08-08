@@ -24,27 +24,53 @@
           <a class="navbar-brand" href="/tracks">Music Track List</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-           <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right">
             <% if session[:id].nil? %>
               <li><a href="/users/login">Login</a></li>
               <li><a href="/users/signup">Sign Up</a></li>
             <% else %>
               <li><a href="/users/logout">Logout</a></li>
             <% end %>
-            </ul>
+          </ul>        
         </div>
       </div>
     </nav>
 
     <div class="container">
-      <h1><%= @track.title %></h1>
-      <p>Artist: <%= @track.author %></p> 
-      <p>URL: <%= @track.url  || "N/A"%></p>
-      <p>Created at: <%= @track.created_at %></p>
-      <p>Updated at: <%= @track.updated_at %> </p>
+
+           <h1>Log in</h1>
       <hr/>
-      <a href="/tracks">Back to All Tracks</a>
+
+      <% if @user && @user.errors.any? %>
+        <div>
+          <strong>Some issues with your fields, please fix them:</strong>
+          <ul>
+            <% @user.errors.full_messages.each do |message| %> 
+              <li><%= message %></li>
+            <% end %> 
+          </ul>
+        </div>
+      <% end %> 
+
+
+      <form method="post" action="/userlogin">
+        <div>
+          <label>E-mail:</label>
+          <input type="test" name="email" value="<%= @user && @user.email %>">
+        </div>
+        <div>
+          <label>Password:</label>
+          <input type="password" name="password" value="<%= @user && @user.password %>">
+        </div>
+        <div>
+          <input type="submit" value="Submit">
+        </div>
+      </form>
+
+      <hr/>
+<a href="/tracks">Back to All Tracks</a>
     </div>
+
 
       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -54,7 +80,6 @@
 
   </body>
 </html>
-
 
 
 

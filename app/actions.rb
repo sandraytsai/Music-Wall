@@ -29,3 +29,40 @@ post '/tracks' do
     erb :'tracks/new'
   end 
 end 
+
+get '/users/signup' do 
+  erb :'users/signup'
+end 
+
+post '/users' do
+  @user = User.new(
+    name: params[:name],
+    email: params[:email],
+    password: params[:password],
+    )
+  if @user.save
+    session[:id] = @user.id
+    redirect '/tracks'
+  else
+    erb :'users/signup'
+  end 
+end 
+
+get '/users/login' do
+  erb :'users/login'
+end 
+
+post '/userlogin' do
+  @user = User.find_by(email: params[:email])
+  if @user && @user.password == params[:password]
+    session[:id] = @user.id
+    redirect '/tracks'
+  else 
+    erb :'users/login'
+  end
+end 
+
+get '/users/logout' do
+  session.clear
+  erb :'users/logout'
+end 
