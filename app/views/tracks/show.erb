@@ -1,3 +1,4 @@
+<center>
 <h1><%= @track.title %></h1>
  
 <p>
@@ -5,7 +6,7 @@
 </p>
  
 <p>
-  URL: <%= @track.url  %>
+  URL: <%= @track.url  || "N/A"%>
 </p>
 
 <p>
@@ -18,3 +19,4 @@
  
 <hr/>
 <a href="/tracks">Back to All Tracks</a>
+</center>
