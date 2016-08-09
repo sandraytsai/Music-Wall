@@ -48,7 +48,59 @@
         <% end %>
       <p>Upvotes: <%= @track.upvotes.count(:upvotes) %></p>
       <p>Shared by <%= User.find(@track.user_id).first_name+" "+User.find(@track.user_id).last_name %> on <%= @track.created_at %></p>
+      
+
+      <h3>Reviews:</h3>
+      <% if session[:id].nil? %>
+        <a href="/users/login">Login</a> or <a href="/users/signup">Sign Up</a> to post a review!
+      <% end %> 
+      <% unless @reviews.any? { |review| review.user_id == session[:id] || session[:id].nil? } %> 
+        <form method="post" action="/reviews/<%=@track.id%>">
+          <div>
+            <label>Subject:</label>
+            <input type="text" name="subject" value="<%=params[:subject]%>">
+          </div>
+          <br>
+          <div>
+            <label>Review:</label>
+            <textarea name="body">Share your thoughts here...</textarea>
+          </div>
+          <br>
+          <div>
+            <label>Rating:</label>
+            <select name="rating">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <br>
+          <div>
+            <input type="submit" value="Submit Review">
+          </div>
+        </form>
+      <% end %>
+
       <hr/>
+        <% sorted_reviews = @reviews.sort_by { |k,v| k[:created_at] }.reverse %>
+        <% sorted_reviews.each do |review| %>
+          <div class="container">
+            <p>Subject: <%= review.title %> </p> 
+            <p>Rating: <%= review.rating%></p>
+            <p> Submitted by <%= User.find(review.user_id).first_name+" "+User.find(review.user_id).last_name %> on <%=review.created_at %></p>
+            <p><%= review.body %></p> 
+            <p>
+              <% if review.user_id == session[:id] %>
+                <a class="btn-default btn" href="/reviews/delete">Delete Review</a> 
+              <% end %>
+            </p>  
+          </div>
+          <hr/>
+        <% end %>
+ 
+
       <a href="/tracks">Back to All Tracks</a>
     </div>
 

@@ -14,6 +14,7 @@ end
 
 get '/tracks/:id' do
   @track = Track.find params[:id]
+  @reviews = Review.where(track_id: params[:id])
   erb :'tracks/show'
 end
 
@@ -28,6 +29,28 @@ post '/tracks' do
     redirect '/tracks'
   else
     erb :'tracks/new'
+  end 
+end 
+
+get '/reviews/delete' do
+  @review = Review.find_by(user_id: session[:id])
+  @track_id = @review.track_id
+  @review.destroy
+  redirect "/tracks/#{@track_id}"
+end 
+
+post '/reviews/:id' do 
+  @review = Review.new(
+    title: params[:subject],
+    body: params[:body],
+    rating: params[:rating],
+    user_id: session[:id],
+    track_id: params[:id]
+    )
+  if @review.save
+    redirect "/tracks/#{params[:id]}"
+  else
+    redirect "/tracks/#{params[:id]}"
   end 
 end 
 

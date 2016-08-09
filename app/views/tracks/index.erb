@@ -46,9 +46,9 @@
           <h3><a href="/tracks/<%= track.id %>"><%= track.title %></a><small> by: <%= track.author %></small></h3>
           <h4>
             <% if track.upvotes.find_by(user_id: session[:id]) || session[:id].nil? %>
-              <a class="btn-default btn disabled" href="/upvote/<%= track.id%>">Upvote!</a> 
+              <a class="btn-default btn disabled" href="/upvote/<%= track.id %>">Upvote!</a> 
             <% else %>
-              <a class="btn-default btn" href="/upvote/<%= track.id%>">Upvote!</a> 
+              <a class="btn-default btn" href="/upvote/<%= track.id %>">Upvote!</a> 
             <% end %>
             <small><%= track.upvotes.count(:upvotes) %> upvote(s)</small>
           </h4>
