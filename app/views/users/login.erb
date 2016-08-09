@@ -21,7 +21,7 @@
     <nav class="navbar navbar-inverse navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/tracks">Music Track List</a>
+          <a class="navbar-brand" href="/tracks">Music Wall</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
@@ -29,7 +29,7 @@
               <li><a href="/users/login">Login</a></li>
               <li><a href="/users/signup">Sign Up</a></li>
             <% else %>
-              <li><a href=#>Welcome, <%=User.find_by(id: session[:id]).name %>!</a></li>
+              <li><a href=#>Welcome, <%=User.find_by(id: session[:id]).first_name %>!</a></li>
               <li><a href="/users/logout">Logout</a></li>
             <% end %>
           </ul>        
@@ -38,30 +38,21 @@
     </nav>
 
     <div class="container">
-
-           <h1>Log in</h1>
+      <h1>Log in</h1>
       <hr/>
 
-      <% if @user && @user.errors.any? %>
-        <div>
-          <strong>Some issues with your fields, please fix them:</strong>
-          <ul>
-            <% @user.errors.full_messages.each do |message| %> 
-              <li><%= message %></li>
-            <% end %> 
-          </ul>
-        </div>
-      <% end %> 
-
+      <% if session[:login_error] %>
+        <p><%= session[:login_error] %></p>
+      <% end %>
 
       <form method="post" action="/userlogin">
         <div>
           <label>E-mail:</label>
-          <input type="test" name="email" value="<%= @user && @user.email %>">
+          <input type="text" name="email" value="<%=params[:email]%>">
         </div>
         <div>
           <label>Password:</label>
-          <input type="password" name="password" value="<%= @user && @user.password %>">
+          <input type="password" name="password" value="<%=params[:password]%>">
         </div>
         <div>
           <input type="submit" value="Submit">
@@ -69,7 +60,7 @@
       </form>
 
       <hr/>
-<a href="/tracks">Back to All Tracks</a>
+      <a href="/tracks">Back to All Tracks</a>
     </div>
 
 

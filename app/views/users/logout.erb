@@ -21,7 +21,7 @@
     <nav class="navbar navbar-inverse navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/tracks">Music Track List</a>
+          <a class="navbar-brand" href="/tracks">Music Wall</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
@@ -29,7 +29,7 @@
               <li><a href="/users/login">Login</a></li>
               <li><a href="/users/signup">Sign Up</a></li>
             <% else %>
-              <li><a href=#>Welcome, <%=User.find_by(id: session[:id]).name %>!</a></li>
+              <li><a href=#>Welcome, <%=User.find_by(id: session[:id]).first_name %>!</a></li>
               <li><a href="/users/logout">Logout</a></li>
             <% end %>
           </ul>
@@ -38,7 +38,7 @@
     </nav>
 
     <div class="container">
-      You have successfully logged out. See you again soon! :)
+      <h1>You have successfully logged out. See you again soon! :)</h1>
 
       <hr/>
       <a href="/tracks">Back to All Tracks</a>

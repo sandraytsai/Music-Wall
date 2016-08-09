@@ -21,7 +21,7 @@
     <nav class="navbar navbar-inverse navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/tracks">Music Track List</a>
+          <a class="navbar-brand" href="/tracks">Music Wall</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
@@ -29,7 +29,7 @@
               <li><a href="/users/login">Login</a></li>
               <li><a href="/users/signup">Sign Up</a></li>
             <% else %>
-              <li><a href=#>Welcome, <%=User.find_by(id: session[:id]).name %>!</a></li>
+              <li><a href=#>Welcome, <%=User.find_by(id: session[:id]).first_name %>!</a></li>
               <li><a href="/users/logout">Logout</a></li>
             <% end %>
           </ul>
@@ -56,16 +56,20 @@
 
       <form method="post" action="/users">
         <div>
-          <label>Name:</label>
-          <input type="text" name="name" value="<%= @user && @user.name %>">
+          <label>First name:</label>
+          <input type="text" name="first_name" value="<%=params[:first_name]%>">
+        </div>
+        <div>
+          <label>Last name:</label>
+          <input type="text" name="last_name" value="<%=params[:last_name]%>">
         </div>
         <div>
           <label>E-mail:</label>
-          <input type="test" name="email" value="<%= @user && @user.email %>">
+          <input type="test" name="email" value="<%=params[:email]%>">
         </div>
         <div>
           <label>Password:</label>
-          <input type="password" name="password" value="<%= @user && @user.password %>">
+          <input type="password" name="password">
         </div>
         <div>
           <input type="submit" value="Submit">

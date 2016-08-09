@@ -7,9 +7,12 @@ gem 'activesupport'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'sinatra-activerecord'
+gem 'bcrypt'
 
 gem 'puma'
 gem 'tux'
+
+
 
 # These gems are only installed when run as `bundle install --without production`
 group :development, :test do

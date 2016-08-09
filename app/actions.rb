@@ -38,7 +38,6 @@ get '/upvote/:id' do
   ) 
   @upvote.save
   redirect '/tracks'
-  erb :'tracks/index'
 end 
 
 get '/users/signup' do 
@@ -47,7 +46,8 @@ end
 
 post '/users' do 
   @user = User.new(
-    name: params[:name],
+    first_name: params[:first_name],
+    last_name: params[:last_name],
     email: params[:email],
     password: params[:password],
     )
@@ -60,15 +60,19 @@ post '/users' do
 end 
 
 get '/users/login' do
+  session.delete(:login_error)
   erb :'users/login'
 end 
 
 post '/userlogin' do
-  @user = User.find_by(email: params[:email])
-  if @user && @user.password == params[:password]
+  @user = User.find_by(email: params[:email]).try(:authenticate, params[:password])
+  if @user 
+    session.delete(:login_error)
     session[:id] = @user.id
     redirect '/tracks'
   else 
+    session.delete(:id)
+    session[:login_error] = "E-mail or password is invalid! Please try again."
     erb :'users/login'
   end
 end 
