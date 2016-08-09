@@ -21,22 +21,17 @@
     <nav class="navbar navbar-inverse navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/tracks">Music Track List</a>
+          <a class="navbar-brand" href="/tracks">Music Share</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
            <ul class="nav navbar-nav navbar-right">
-
-
-      <% if session[:id].nil? %>
-        <li><a href="/users/login">Login</a></li>
-        <li><a href="/users/signup">Sign Up</a></li>
-      <% else %>
-        <li><a href="/users/logout">Logout</a></li>
-
-      <% end %>
-               <!--  <li><a href="/users/login">Login</a></li>
-                <li><a href="/users/signup">Sign Up</a></li>
-                <li><a href="/users/logout">Logout</a></li> -->
+            <% if session[:id].nil? %>
+              <li><a href="/users/login">Login</a></li>
+              <li><a href="/users/signup">Sign Up</a></li>
+            <% else %>
+              <li><a href=#>Welcome, <%=User.find_by(id: session[:id]).name %>!</a></li>
+              <li><a href="/users/logout">Logout</a></li>
+            <% end %>
             </ul>
         </div>
       </div>
@@ -44,15 +39,26 @@
 
     <div class="container">
       <h1>Tracks:</h1>
+
       <hr/>
+
       <% @tracks.each do |track| %>
-        <div class="track">
-          <h3><a href="/tracks/<%= track.id %>"><%= track.title %></a><small>(by: <%= track.author %>)</small></h3>
-          </div>
+          <h3><a href="/tracks/<%= track.id %>"><%= track.title %></a><small> by: <%= track.author %></small></h3>
+          <h4>
+            <% if track.upvotes.find_by(user_id: session[:id]) %>
+              <a class="btn-default btn disabled" href="/upvote/<%= track.id%>">Upvote!</a> 
+            <% else %>
+              <a class="btn-default btn" href="/upvote/<%= track.id%>">Upvote!</a> 
+            <% end %>
+            <small><%= track.upvotes.count(:upvotes) %> upvote(s)</small>
+          </h4>
       <% end %>
 
       <hr/>
-      <a class="btn-info btn" href="/tracks/new">Post a song!</a>
+
+      <% if session[:id] %>
+        <a class="btn-info btn" href="/tracks/new">Share Music!</a>
+      <% end %>
 
       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

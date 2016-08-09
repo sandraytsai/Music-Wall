@@ -29,6 +29,7 @@
               <li><a href="/users/login">Login</a></li>
               <li><a href="/users/signup">Sign Up</a></li>
             <% else %>
+              <li><a href=#>Welcome, <%=User.find_by(id: session[:id]).name %>!</a></li>
               <li><a href="/users/logout">Logout</a></li>
             <% end %>
             </ul>
@@ -39,9 +40,14 @@
     <div class="container">
       <h1><%= @track.title %></h1>
       <p>Artist: <%= @track.author %></p> 
-      <p>URL: <%= @track.url  || "N/A"%></p>
-      <p>Created at: <%= @track.created_at %></p>
-      <p>Updated at: <%= @track.updated_at %> </p>
+      <p>Link:            
+        <%if @track.url? %>
+          <a href="<%= @track.url %>"> Listen here</a></p> 
+        <% else %>
+          N/A
+        <% end %>
+      <p>Upvotes: <%= @track.upvotes.count(:upvotes) %></p>
+      <p>Shared by <%= User.find(@track.user_id).name %> on <%= @track.created_at %></p>
       <hr/>
       <a href="/tracks">Back to All Tracks</a>
     </div>

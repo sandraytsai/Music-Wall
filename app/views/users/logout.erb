@@ -29,6 +29,7 @@
               <li><a href="/users/login">Login</a></li>
               <li><a href="/users/signup">Sign Up</a></li>
             <% else %>
+              <li><a href=#>Welcome, <%=User.find_by(id: session[:id]).name %>!</a></li>
               <li><a href="/users/logout">Logout</a></li>
             <% end %>
           </ul>
@@ -37,7 +38,7 @@
     </nav>
 
     <div class="container">
-      You have successfully logged out :)
+      You have successfully logged out. See you again soon! :)
 
       <hr/>
       <a href="/tracks">Back to All Tracks</a>

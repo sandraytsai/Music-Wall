@@ -29,7 +29,8 @@
               <li><a href="/users/login">Login</a></li>
               <li><a href="/users/signup">Sign Up</a></li>
             <% else %>
-              <li><a href="/users/logout">Logout</a></li>
+              <li><a href=#>Welcome, <%=User.find_by(id: session[:id]).name %>!</a></li>
+              <li><a href="/users/logout">Logout</a></li>            
             <% end %>
             </ul>
         </div>

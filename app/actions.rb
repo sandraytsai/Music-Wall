@@ -22,6 +22,7 @@ post '/tracks' do
     title: params[:title],
     author: params[:author],
     url: params[:url],
+    user_id: session[:id]
     )
   if @track.save
     redirect '/tracks'
@@ -30,11 +31,21 @@ post '/tracks' do
   end 
 end 
 
+get '/upvote/:id' do
+  @upvote = Upvote.new(
+    user_id: session[:id],
+    track_id: params[:id]
+  ) 
+  @upvote.save
+  redirect '/tracks'
+  erb :'tracks/index'
+end 
+
 get '/users/signup' do 
   erb :'users/signup'
 end 
 
-post '/users' do
+post '/users' do 
   @user = User.new(
     name: params[:name],
     email: params[:email],
@@ -66,3 +77,5 @@ get '/users/logout' do
   session.clear
   erb :'users/logout'
 end 
+
+

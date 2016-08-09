@@ -4,8 +4,9 @@ class AddTracks < ActiveRecord::Migration
       t.string :title
       t.string :author
       t.string :url 
-      t.date :created_at
-      t.date :updated_at
-    end 
+      t.datetime :created_at
+      t.datetime :updated_at
+      t.integer :user_id
+    end
   end
 end
