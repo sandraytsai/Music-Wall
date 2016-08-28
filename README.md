@@ -1,7 +1,8 @@
-Sinatra
+Music Wall
 =============
 
-Brought to you by Lighthouse Labs
+First Sinatra app. An app built with ruby, HTML, CSS, and Materialize. Users has the ability to share and upvote music. 
+* Layout not fully implemented
 
 ## Getting Started
 
